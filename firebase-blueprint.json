@@ -1,0 +1,319 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": ["string", "null"] },
+        "displayNameLowercase": { "type": ["string", "null"] },
+        "photoURL": { "type": ["string", "null"] },
+        "role": { "type": "string", "enum": ["ADMIN", "OPERATOR", "USER"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastActiveAt": { "type": "string", "format": "date-time" },
+        "online": { "type": "boolean" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Publicly readable profile information for a user.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": ["string", "null"] },
+        "displayNameLowercase": { "type": ["string", "null"] },
+        "photoURL": { "type": ["string", "null"] },
+        "online": { "type": "boolean" },
+        "lastActiveAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "online", "lastActiveAt"]
+    },
+    "RiskData": {
+      "title": "RiskData",
+      "description": "Historical risk scores and analytics",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "score": { "type": "number" },
+        "level": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "modelUsed": { "type": "string" }
+      },
+      "required": ["userId", "score", "level", "timestamp", "location", "modelUsed"]
+    },
+    "TrackingData": {
+      "title": "TrackingData",
+      "description": "Historical locations and tracking data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "velocity": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          },
+          "required": ["x", "y"]
+        },
+        "heading": { "type": "number" }
+      },
+      "required": ["userId", "timestamp", "location", "velocity", "heading"]
+    },
+    "LiveLocation": {
+      "title": "LiveLocation",
+      "description": "Real-time location of users for proximity detection",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "geohash": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "type": { "type": "string" }
+      },
+      "required": ["userId", "lat", "lng", "geohash", "timestamp", "type"]
+    },
+    "AlertEvent": {
+      "title": "AlertEvent",
+      "description": "Real-time collision alerts",
+      "type": "object",
+      "properties": {
+        "mainUserId": { "type": "string" },
+        "otherUserId": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "geohash": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "riskLevel": { "type": "string" }
+      },
+      "required": ["mainUserId", "lat", "lng", "geohash", "timestamp", "riskLevel"]
+    },
+    "DENMEvent": {
+      "title": "DENMEvent",
+      "description": "Decentralized Environmental Notification Message for V2X communication",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventType": { "type": "string", "enum": ["COLLISION_RISK", "DANGEROUS_ZONE", "UNAUTHORIZED_AREA"] },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "timestamp": { "type": "number" },
+        "riskLevel": { "type": "string" },
+        "involvedUserIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "senderId": { "type": "string" },
+        "expiresAt": { "type": "number" },
+        "geohash": { "type": "string" }
+      },
+      "required": ["id", "eventType", "location", "timestamp", "riskLevel", "involvedUserIds", "senderId", "expiresAt", "geohash"]
+    },
+    "Feedback": {
+      "title": "Feedback",
+      "description": "User feedback on AI recommendations or simulation behavior",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "type": { "type": "string", "enum": ["RECOMMENDATION", "SIMULATION"] },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "recommendationText": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "context": { "type": "object" }
+      },
+      "required": ["uid", "type", "timestamp"]
+    },
+    "InfrastructureAlert": {
+      "title": "InfrastructureAlert",
+      "description": "Alerts triggered by entering dangerous or restricted infrastructure zones",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "vruType": { "type": "string" },
+        "infraType": { "type": "string" },
+        "safetyLevel": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "required": ["userId", "timestamp", "location", "vruType", "infraType", "safetyLevel", "message"]
+    },
+    "SessionRecord": {
+      "title": "SessionRecord",
+      "description": "Historical simulation sessions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "duration": { "type": "number" },
+        "user": { "type": "object" },
+        "context": { "type": "object" },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "avgError": { "type": "number" },
+            "collisionWarnings": { "type": "number" },
+            "quantumFusionActive": { "type": "boolean" }
+          },
+          "required": ["avgError", "collisionWarnings", "quantumFusionActive"]
+        },
+        "summary": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "duration", "user", "context", "metrics", "userId"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Direct 1-1 conversation between two users",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["direct"] },
+        "members": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "membersKey": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "lastMessage": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "senderId": { "type": "string" },
+            "createdAt": { "type": "string", "format": "date-time" }
+          },
+          "required": ["text", "senderId", "createdAt"]
+        }
+      },
+      "required": ["type", "members", "membersKey", "createdAt", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A message within a conversation",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "type": { "type": "string", "enum": ["text"] },
+        "status": { "type": "string", "enum": ["sent", "delivered", "read"] }
+      },
+      "required": ["senderId", "text", "createdAt", "type"]
+    },
+    "Incident": {
+      "title": "Incident",
+      "description": "User reported incident on the map",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["ROADWORKS", "ROAD_CLOSED", "SIDEWALK_CLOSED", "DANGER", "ACCIDENT", "OBSTACLE", "OTHER"] },
+        "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+        "description": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "geohash": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "createdByUserId": { "type": "string" },
+        "expiresAt": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "resolved", "removed"] },
+        "photoUrl": { "type": "string" },
+        "upvotes": { "type": "number" },
+        "reportsCount": { "type": "number" }
+      },
+      "required": ["type", "severity", "location", "geohash", "createdAt", "createdByUserId", "expiresAt", "status", "upvotes", "reportsCount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Collection of user profiles"
+    },
+    "/public_profiles/{userId}": {
+      "schema": { "$ref": "#/entities/PublicProfile" },
+      "description": "Collection of public user profiles"
+    },
+    "/incidents/{docId}": {
+      "schema": { "$ref": "#/entities/Incident" },
+      "description": "Collection of user reported incidents"
+    },
+    "/risk_data/{docId}": {
+      "schema": { "$ref": "#/entities/RiskData" },
+      "description": "Collection of historical risk scores"
+    },
+    "/tracking_data/{docId}": {
+      "schema": { "$ref": "#/entities/TrackingData" },
+      "description": "Collection of historical tracking data"
+    },
+    "/live_locations/{userId}": {
+      "schema": { "$ref": "#/entities/LiveLocation" },
+      "description": "Collection of real-time locations"
+    },
+    "/alerts/{docId}": {
+      "schema": { "$ref": "#/entities/AlertEvent" },
+      "description": "Collection of real-time alerts"
+    },
+    "/feedback/{docId}": {
+      "schema": { "$ref": "#/entities/Feedback" },
+      "description": "Collection of user feedback"
+    },
+    "/infrastructure_alerts/{docId}": {
+      "schema": { "$ref": "#/entities/InfrastructureAlert" },
+      "description": "Collection of infrastructure safety alerts"
+    },
+    "/denm_events/{docId}": {
+      "schema": { "$ref": "#/entities/DENMEvent" },
+      "description": "Collection of DENM V2X messages"
+    },
+    "/sessions/{docId}": {
+      "schema": { "$ref": "#/entities/SessionRecord" },
+      "description": "Collection of historical simulation sessions"
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "Collection of global direct conversations"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Messages within a conversation"
+    }
+  }
+}
