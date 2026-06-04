@@ -1,0 +1,5 @@
+{
+  "name": "VRU-Guard Sentinel",
+  "description": "Enterprise-grade SaaS for real-time VRU geolocation, collision risk management, and quantum-enhanced sensor fusion simulation.",
+  "requestFramePermissions": ["geolocation"]
+}
