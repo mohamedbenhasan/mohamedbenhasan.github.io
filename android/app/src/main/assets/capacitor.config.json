@@ -1,0 +1,10 @@
+{
+	"appId": "com.vruguard.sentinel",
+	"appName": "VRU Sentinel",
+	"webDir": "dist",
+	"plugins": {
+		"Geolocation": {
+			"locationAlways": true
+		}
+	}
+}
