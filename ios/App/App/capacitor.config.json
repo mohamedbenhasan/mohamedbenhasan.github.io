@@ -1,0 +1,16 @@
+{
+	"appId": "com.vruguard.sentinel",
+	"appName": "VRU Sentinel",
+	"webDir": "dist",
+	"plugins": {
+		"Geolocation": {
+			"locationAlways": true
+		}
+	},
+	"packageClassList": [
+		"TextToSpeechPlugin",
+		"AppPlugin",
+		"GeolocationPlugin",
+		"HapticsPlugin"
+	]
+}
