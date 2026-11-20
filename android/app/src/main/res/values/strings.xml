@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">VRU Sentinel</string>
+    <string name="title_activity_main">VRU Sentinel</string>
+    <string name="package_name">com.vruguard.sentinel</string>
+    <string name="custom_url_scheme">com.vruguard.sentinel</string>
+</resources>
