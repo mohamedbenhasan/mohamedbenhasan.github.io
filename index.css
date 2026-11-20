@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* LIGHT MODE (swapped slate scale) */
+    --color-white: 15 23 42; 
+    --color-black: 255 255 255;
+    
+    --slate-50: 2 6 23;      /* 950 */
+    --slate-100: 15 23 42;   /* 900 */
+    --slate-200: 30 41 59;   /* 800 */
+    --slate-300: 51 65 85;   /* 700 */
+    --slate-400: 71 85 105;  /* 600 */
+    --slate-500: 100 116 139;/* 500 */
+    --slate-600: 148 163 184;/* 400 */
+    --slate-700: 203 213 225;/* 300 */
+    --slate-800: 226 232 240;/* 200 */
+    --slate-850: 236 241 245;/* custom light */
+    --slate-900: 241 245 249;/* 100 */
+    --slate-950: 255 255 255;/* pure white for background */
+  }
+
+  .dark {
+    /* DARK MODE (normal slate scale) */
+    --color-white: 255 255 255;
+    --color-black: 0 0 0;
+
+    --slate-50: 248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-850: 30 41 59; 
+    --slate-900: 15 23 42;
+    --slate-950: 2 6 23;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-200 font-sans antialiased;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-slate-900/50;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-700/80 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-600;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  @apply bg-slate-900/60 backdrop-blur-md border border-slate-800/50 shadow-xl;
+}
+.glass-card {
+  @apply bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-xl shadow-lg transition-all duration-300;
+}
+.glass-card:hover {
+  @apply bg-slate-800/60 border-slate-600/50 shadow-xl;
+}
+
+/* Map specific overrides */
+.leaflet-container {
+  @apply bg-slate-900 font-sans;
+}
+
+/* Global Dark Popups and Tooltips */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  @apply bg-slate-900 text-slate-100 shadow-lg;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: auto !important;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  @apply border border-slate-700 overflow-hidden;
+}
+
+.leaflet-tooltip {
+  @apply bg-slate-900 text-slate-100 border border-slate-700 shadow-md;
+}
+.leaflet-tooltip-top:before {
+  @apply border-t-slate-700;
+}
+.leaflet-tooltip-bottom:before {
+  @apply border-b-slate-700;
+}
+.leaflet-tooltip-left:before {
+  @apply border-l-slate-700;
+}
+.leaflet-tooltip-right:before {
+  @apply border-r-slate-700;
+}
+
+.leaflet-control-zoom a {
+  @apply bg-slate-800 text-slate-400 border-slate-700;
+}
+
+.leaflet-control-zoom a:hover {
+  @apply bg-slate-700 text-slate-100;
+}
+
+/* Smooth transitions */
+.transition-layout {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth marker sliding to compensate for lowered simulation tick rate */
+.leaflet-marker-icon {
+  transition: transform 0.25s linear;
+}
+
+.font-display {
+  font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes vruToastProgress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.vru-toast-progress {
+  animation-name: vruToastProgress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-pulse,
+  .animate-spin,
+  .vru-toast-progress {
+    animation: none !important;
+    transition: none !important;
+  }
+}
