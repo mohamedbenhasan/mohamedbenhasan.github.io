@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /download
+Disallow: /super-admin
+Disallow: /risk-heatmap
+Disallow: /login
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /*?live_track=
+Disallow: /*?t=
+Disallow: /*?session_id=
+Disallow: /*?paymentRef=
+
+Sitemap: https://www.vruguard.me/sitemap.xml
